@@ -47,7 +47,7 @@ app.patch("/editUser/:id", (request, response) => {
   for (let i = 0; i < users.length; i++) {
     if (users[i].id === id) {
       users[i].name = name;
-      users[i].age = age; // BUG: PATCH request overwrites the whole object instead of updating partially (e.g., missing fields like 'age' are removed).
+      users[i].age = age; // BUG: PATCH request overwrites the whole object instead of updating partially.
     }
   }
 
