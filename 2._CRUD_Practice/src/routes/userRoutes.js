@@ -14,6 +14,7 @@ userRoutes.post("/", async (req, res) => {
 
     if (userExists) {
       return res.status(409).json({
+        success: false,
         message: "User already exists in database!",
         data: null,
       });
@@ -29,6 +30,7 @@ userRoutes.post("/", async (req, res) => {
     await user.save();
 
     res.status(201).json({
+      success: true,
       message: "User created successfully",
     });
   } catch (error) {
@@ -41,9 +43,29 @@ userRoutes.post("/", async (req, res) => {
         .join(", ");
 
       return res.status(400).json({
+        success: false,
         message: errorMessage,
       });
     }
+  }
+});
+
+//2. READ ALL USERS
+userRoutes.get("/", async (_req, res) => {
+  try {
+    const users = await User.find();
+
+    res.status(200).json({
+      success: true,
+      message: "Users fetched successfully",
+      data: users,
+    });
+  } catch (error) {
+    res.status(404).json({
+      success: false,
+      message: "Users not found",
+      data: null,
+    });
   }
 });
 
